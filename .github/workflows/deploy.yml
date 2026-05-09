@@ -24,12 +24,14 @@ jobs:
           node-version: 20
           cache: npm
       - run: npm ci
+      - uses: actions/configure-pages@v5
+        with:
+          enablement: true
       - name: Build
         env:
           # Set this to '/<repo-name>/' for project sites, or '/' for user/org or custom domain.
           VITE_BASE_PATH: /${{ github.event.repository.name }}/
         run: npm run build
-      - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
