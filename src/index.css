@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-space-800 text-hud-text font-mono antialiased;
+    background-image:
+      radial-gradient(ellipse at top, rgba(0, 255, 209, 0.06), transparent 60%),
+      radial-gradient(ellipse at bottom right, rgba(255, 41, 117, 0.05), transparent 50%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    @apply bg-neon-cyan/30 text-white;
+  }
+
+  /* Subtle scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-space-900;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-space-500 rounded;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-neon-cyan/40;
+  }
+}
+
+@layer components {
+  /* CRT scanline overlay (apply on a fixed full-screen div) */
+  .crt-scanlines {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0.03) 0px,
+      rgba(255, 255, 255, 0.03) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+
+  .crt-vignette {
+    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.55) 100%);
+  }
+
+  /* Animated horizontal scan line */
+  .scan-bar {
+    @apply pointer-events-none fixed left-0 right-0 z-30 h-[2px];
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(0, 255, 209, 0.45),
+      transparent
+    );
+    animation: scanline 8s linear infinite;
+  }
+
+  /* Terminal panel — bracketed corners */
+  .panel {
+    @apply relative border border-space-500/70 bg-space-900/70 backdrop-blur-sm;
+  }
+  .panel::before,
+  .panel::after {
+    content: '';
+    @apply absolute h-3 w-3 border-neon-cyan;
+  }
+  .panel::before {
+    @apply top-0 left-0 border-t border-l;
+  }
+  .panel::after {
+    @apply bottom-0 right-0 border-b border-r;
+  }
+
+  .panel-corners-pink::before,
+  .panel-corners-pink::after {
+    @apply border-neon-pink;
+  }
+
+  .neon-text-cyan {
+    text-shadow:
+      0 0 4px rgba(0, 255, 209, 0.7),
+      0 0 14px rgba(0, 255, 209, 0.35);
+  }
+  .neon-text-pink {
+    text-shadow:
+      0 0 4px rgba(255, 41, 117, 0.8),
+      0 0 14px rgba(255, 41, 117, 0.35);
+  }
+  .neon-text-amber {
+    text-shadow:
+      0 0 4px rgba(255, 170, 0, 0.8),
+      0 0 14px rgba(255, 170, 0, 0.35);
+  }
+
+  /* Glitch hover (subtle) */
+  .glitch:hover {
+    animation: glitch 0.3s steps(2) 1;
+  }
+  @keyframes glitch {
+    0% { transform: translate(0); }
+    25% { transform: translate(-1px, 1px); }
+    50% { transform: translate(1px, -1px); }
+    75% { transform: translate(-1px, 0); }
+    100% { transform: translate(0); }
+  }
+
+  .cursor::after {
+    content: '▮';
+    @apply ml-1 text-neon-cyan;
+    animation: blink 1s steps(2) infinite;
+  }
+
+  /* Tag chip */
+  .tag {
+    @apply inline-flex items-center border border-space-500/80 bg-space-800/60 px-2 py-0.5 text-[11px] uppercase tracking-wider text-hud-text/90;
+  }
+  .tag-cyan { @apply border-neon-cyan/40 text-neon-cyan; }
+  .tag-pink { @apply border-neon-pink/40 text-neon-pink; }
+  .tag-amber { @apply border-neon-amber/40 text-neon-amber; }
+}
