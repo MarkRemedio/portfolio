@@ -236,13 +236,6 @@ export const freelance: Freelance[] = [
     ],
   },
   {
-    client: 'LionFountain',
-    project: 'GHL ↔ third-party automation',
-    url: '',
-    stack: ['GHL', 'n8n'],
-    bullets: ['Built n8n automations connecting the client\'s GHL with third-party systems.'],
-  },
-  {
     client: 'Zappysales',
     project: 'QA automation & price-sync scrapers',
     url: '',
